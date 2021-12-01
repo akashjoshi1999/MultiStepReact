@@ -1,5 +1,3 @@
-# MultiStepReact
-multi step form project
 # multi step form project
 
 ## Requirements:
