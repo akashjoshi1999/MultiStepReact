@@ -20,21 +20,24 @@ const steps = [
     content: <FormThree />,
   },
 ];
-
 const App = () => {
   const [current, setCurrent] = React.useState(0);
-
+  
   const next = () => {
     setCurrent(current + 1);
   };
-
+  
   const prev = () => {
     setCurrent(current - 1);
   };
+  
+  const onChange = (id) => {
+    setCurrent(id);
+  }
 
   return (
     <>
-      <Steps current={current}>
+      <Steps current={current} onChange={onChange}>
         {steps.map(item => (
           <Step key={item.title} title={item.title} />
         ))}

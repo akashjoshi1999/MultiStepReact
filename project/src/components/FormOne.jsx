@@ -1,61 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Form,
   Input,
-  InputNumber,
-  Cascader,
-  Select,
-  Row,
-  Col,
   Space,
   Radio,
   Checkbox,
   Button,
-  AutoComplete,
+  InputNumber
 } from 'antd';
-const { Option } = Select;
 const plainOptions = ['Car', 'Motorbike', 'Bicycle', 'Boat'];
-const residences = [
-  {
-    value: 'zhejiang',
-    label: 'Zhejiang',
-    children: [
-      {
-        value: 'hangzhou',
-        label: 'Hangzhou',
-        children: [
-          {
-            value: 'xihu',
-            label: 'West Lake',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: 'jiangsu',
-    label: 'Jiangsu',
-    children: [
-      {
-        value: 'nanjing',
-        label: 'Nanjing',
-        children: [
-          {
-            value: 'zhonghuamen',
-            label: 'Zhong Hua Men',
-          },
-        ],
-      },
-    ],
-  },
-];
+
 const formItemLayout = {
   labelCol: {
     xs: {
       span: 24,
     },
     sm: {
-      span: 8,
+      span: 5,
     },
   },
   wrapperCol: {
@@ -85,49 +46,9 @@ const FormOne = () => {
 
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
+    form.resetFields();
   };
 
-  const onChangeHandler = () => {
-
-  }
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select
-        style={{
-          width: 70,
-        }}
-      >
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>
-    </Form.Item>
-  );
-  const suffixSelector = (
-    <Form.Item name="suffix" noStyle>
-      <Select
-        style={{
-          width: 70,
-        }}
-      >
-        <Option value="USD">$</Option>
-        <Option value="CNY">¥</Option>
-      </Select>
-    </Form.Item>
-  );
-  const [autoCompleteResult, setAutoCompleteResult] = useState([]);
-
-  const onWebsiteChange = (value) => {
-    if (!value) {
-      setAutoCompleteResult([]);
-    } else {
-      setAutoCompleteResult(['.com', '.org', '.net'].map((domain) => `${value}${domain}`));
-    }
-  };
-
-  const websiteOptions = autoCompleteResult.map((website) => ({
-    label: website,
-    value: website,
-  }));
   return (
     <Form
       {...formItemLayout}
@@ -135,7 +56,6 @@ const FormOne = () => {
       name="register"
       onFinish={onFinish}
       initialValues={{
-        residence: ['zhejiang', 'hangzhou', 'xihu'],
         prefix: '86',
       }}
       scrollToFirstError
@@ -184,12 +104,15 @@ const FormOne = () => {
       >
         <Input />
       </Form.Item>
-      <Form.Item>
-        <Radio.Group onChange={onChangeHandler}>
+      <Form.Item
+        name="gender"
+        label="Gender"
+      >
+        <Radio.Group>
           <Space direction="vertical">
-            <Radio value={1}>Female</Radio>
-            <Radio value={2}>Male</Radio>
-            <Radio value={3}>Undifferentiated</Radio>
+            <Radio value={"Female"}>Female</Radio>
+            <Radio value={"Male"}>Male</Radio>
+            <Radio value={"Undifferentiated"}>Undifferentiated</Radio>
           </Space>
         </Radio.Group>
       </Form.Item>
@@ -199,6 +122,8 @@ const FormOne = () => {
         rules={[
           {
             type: 'number',
+            min: 0,
+            max: 99,
             message: 'The input is not valid for Age!',
           },
           {
@@ -207,9 +132,12 @@ const FormOne = () => {
           },
         ]}
       >
-        <Input />
+        <InputNumber />
       </Form.Item>
-      <Form.Item>
+      <Form.Item
+        name="transportation"
+        label="Mode of transportation"
+      >
         <Checkbox.Group options={plainOptions} />
       </Form.Item>
       <Form.Item {...tailFormItemLayout}>
